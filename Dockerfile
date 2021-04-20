@@ -2,9 +2,11 @@ FROM node:14.16.0-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY package.json .
 
 RUN yarn install
+
+COPY . .
 
 EXPOSE 3000
 
