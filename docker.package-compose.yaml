@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  web:
+    command: yarn package
+    container_name: next-docker-package
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
