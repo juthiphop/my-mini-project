@@ -4,10 +4,10 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN yarn install
+RUN yarn package
 
 COPY . .
 
 EXPOSE 3000
 
-CMD ["yarn" , "package"]
+CMD ["yarn" , "dev"]
