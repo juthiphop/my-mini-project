@@ -32,11 +32,12 @@ export default function Add(props) {
   }, 700);
 
   const mailInitialState = {
-    id: "",
-    building: "",
-    room: "",
-    itemType: "",
-    from: "",
+    mailId: "",
+    mailBuilding: "",
+    mailRoom: "",
+    mailItemType: "",
+    mailFrom: "",
+    mailStatus: "",
   };
   const [mail, setMail] = useState(mailInitialState);
   const classes = useStyles();
@@ -45,8 +46,8 @@ export default function Add(props) {
   let idMail = mailBox.length + 1;
 
   const getMaill = async () => {
-    const res = await api.get("/mails");
-    return res.data;
+    const res = await api.get("/mails/");
+    return res.data.payload;
   };
 
   useEffect(() => {
@@ -62,7 +63,13 @@ export default function Add(props) {
     let id = e.target.id;
     let value = e.target.value;
     let mailCode = uuid();
-    setMail({ ...mail, id: idMail, [id]: value, mailCode: mailCode });
+    setMail({
+      ...mail,
+      mailId: idMail,
+      [id]: value,
+      mailCode: mailCode,
+      mailStatus: "New Mail",
+    });
   }
 
   const addMailHandler = async (e) => {
@@ -71,8 +78,8 @@ export default function Add(props) {
       ...mail,
     };
 
-    const res = await api.post("/mails", req);
-    setMailBox([...mailBox, res.data]);
+    const res = await api.post("/mails/", req);
+    setMailBox([...mailBox, res.data.payload]);
     setMail(mailInitialState);
   };
   return (
@@ -103,8 +110,8 @@ export default function Add(props) {
                   <CardBody>
                     <TextField
                       id="standard-basic"
-                      id="id"
-                      value={mail.id}
+                      id="mailId"
+                      value={mail.mailId}
                       fullWidth
                       aria-readonly
                       disabled
@@ -113,32 +120,32 @@ export default function Add(props) {
                     <TextField
                       id="standard-basic"
                       label="Building ..."
-                      id="building"
-                      value={mail.building}
+                      id="mailBuilding"
+                      value={mail.mailBuilding}
                       fullWidth
                       onChange={onChangeForm}
                     />
                     <TextField
                       id="standard-basic"
                       label="room ..."
-                      id="room"
-                      value={mail.room}
+                      id="mailRoom"
+                      value={mail.mailRoom}
                       fullWidth
                       onChange={onChangeForm}
                     />
                     <TextField
                       id="standard-basic"
                       label="itemType ..."
-                      id="itemType"
-                      value={mail.itemType}
+                      id="mailItemType"
+                      value={mail.mailItemType}
                       fullWidth
                       onChange={onChangeForm}
                     />
                     <TextField
                       id="standard-basic"
                       label="from ..."
-                      id="from"
-                      value={mail.from}
+                      id="mailFrom"
+                      value={mail.mailFrom}
                       fullWidth
                       onChange={onChangeForm}
                     />

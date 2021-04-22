@@ -46,8 +46,8 @@ export default function ManageMailSection() {
   const [mailBox, setMailBox] = useState([]);
 
   const getMaill = async () => {
-    const res = await api.get("/mails");
-    return res.data;
+    const res = await api.get("/mails/");
+    return res.data.payload;
   };
 
   useEffect(() => {
@@ -63,10 +63,10 @@ export default function ManageMailSection() {
   //   console.log(id);
   // };
 
-  const removeMailHandler = async (id) => {
-    await api.delete(`/mails/${id}`);
+  const removeMailHandler = async (mailId) => {
+    await api.delete(`/mails/?mailId=${mailId}`);
     const newMailBox = mailBox.filter((res) => {
-      return res.id !== id;
+      return res.mailId !== mailId;
     });
 
     setMailBox(newMailBox);
@@ -94,9 +94,12 @@ export default function ManageMailSection() {
               </TableRow> */}
               <TableRow>
                 {/* <StyledTableCell>building</StyledTableCell> */}
+                <StyledTableCell align="left">id</StyledTableCell>
                 <StyledTableCell align="left">room</StyledTableCell>
                 <StyledTableCell align="left">itemType</StyledTableCell>
                 <StyledTableCell align="left">from</StyledTableCell>
+                <StyledTableCell align="left">create date</StyledTableCell>
+                <StyledTableCell align="left">update date</StyledTableCell>
                 <StyledTableCell align="left"></StyledTableCell>
               </TableRow>
             </TableHead>
@@ -115,44 +118,51 @@ export default function ManageMailSection() {
                 </StyledTableRow>
               ))} */}
 
-              {mailBox
-                .map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.building} {row.room}
-                    </StyledTableCell>
-                    {/* <StyledTableCell align="left">{row.room}</StyledTableCell> */}
-                    <StyledTableCell align="left">
-                      {row.itemType}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">{row.from}</StyledTableCell>
-                    <StyledTableCell align="left">
-                      <Link
-                        href="/mailbox/update/[token]"
-                        as={`/mailbox/update/${row.mailCode}`}
-                      >
-                        <Button
-                          justIcon
-                          round
-                          color="warning"
-                          style={{ marginRight: 10 }}
-                          // onClick={() => removeMailHandler(row.id)}
-                        >
-                          <Icon className={classes.icons}>edit</Icon>
-                        </Button>
-                      </Link>
+              {mailBox.map((row) => (
+                <StyledTableRow key={row.mailId}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.mailId}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.mailBuilding} {row.mailRoom}
+                  </StyledTableCell>
+                  {/* <StyledTableCell align="left">{row.room}</StyledTableCell> */}
+                  <StyledTableCell align="left">
+                    {row.mailItemType}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">{row.mailFrom}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {new Date(row.createDate).toLocaleDateString()}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {new Date(row.lastUpdate).toLocaleDateString()}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    <Link
+                      href="/mailbox/update/[token]"
+                      as={`/mailbox/update/${row.mailCode}`}
+                    >
                       <Button
                         justIcon
                         round
-                        color="danger"
-                        onClick={() => removeMailHandler(row.id)}
+                        color="warning"
+                        style={{ marginRight: 10 }}
+                        // onClick={() => removeMailHandler(row.id)}
                       >
-                        <Icon className={classes.icons}>delete</Icon>
+                        <Icon className={classes.icons}>edit</Icon>
                       </Button>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))
-                .reverse()}
+                    </Link>
+                    <Button
+                      justIcon
+                      round
+                      color="danger"
+                      onClick={() => removeMailHandler(row.mailId)}
+                    >
+                      <Icon className={classes.icons}>delete</Icon>
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

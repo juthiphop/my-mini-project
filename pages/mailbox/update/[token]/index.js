@@ -36,11 +36,11 @@ export default function Update(props) {
   const { token } = router.query;
 
   const mailInitialState = {
-    id: "",
-    building: "",
-    room: "",
-    itemType: "",
-    from: "",
+    mailId: "",
+    mailBuilding: "",
+    mailRoom: "",
+    mailItemType: "",
+    mailFrom: "",
     mailCode: "",
   };
   const [mail, setMail] = useState(mailInitialState);
@@ -48,8 +48,8 @@ export default function Update(props) {
   const { ...rest } = props;
 
   const getMaill = async () => {
-    const res = await api.get(`/mails?mailCode=${token}`);
-    return res.data;
+    const res = await api.get(`/mails/getMail/?mailCode=${token}`);
+    return res.data.payload;
   };
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function Update(props) {
   const updateMailHandler = async (e) => {
     e.preventDefault();
     // console.log(mail);
-    const res = await api.put(`/mails/${mail.id}`, mail);
+    const res = await api.put(`/mails/`, mail);
     if (res) {
       Router.push("/mailbox/edit");
     } else {
@@ -108,13 +108,12 @@ export default function Update(props) {
                 <form className={classes.form} onSubmit={updateMailHandler}>
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Update Mail</h4>
-                    {/* <code>{JSON.stringify(mail)}</code> */}
                   </CardHeader>
                   <CardBody>
                     <TextField
                       id="standard-basic"
-                      id="id"
-                      value={mail.id}
+                      id="mailId"
+                      value={mail.mailId}
                       fullWidth
                       aria-readonly
                       disabled
@@ -123,32 +122,32 @@ export default function Update(props) {
                     <TextField
                       id="standard-basic"
                       label="Building ..."
-                      id="building"
-                      value={mail.building}
+                      id="mailBuilding"
+                      value={mail.mailBuilding}
                       fullWidth
                       onChange={onChangeForm}
                     />
                     <TextField
                       id="standard-basic"
                       label="room ..."
-                      id="room"
-                      value={mail.room}
+                      id="mailRoom"
+                      value={mail.mailRoom}
                       fullWidth
                       onChange={onChangeForm}
                     />
                     <TextField
                       id="standard-basic"
                       label="itemType ..."
-                      id="itemType"
-                      value={mail.itemType}
+                      id="mailItemType"
+                      value={mail.mailItemType}
                       fullWidth
                       onChange={onChangeForm}
                     />
                     <TextField
                       id="standard-basic"
                       label="from ..."
-                      id="from"
-                      value={mail.from}
+                      id="mailFrom"
+                      value={mail.mailFrom}
                       fullWidth
                       onChange={onChangeForm}
                     />
