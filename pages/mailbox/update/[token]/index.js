@@ -42,6 +42,8 @@ export default function Update(props) {
     mailItemType: "",
     mailFrom: "",
     mailCode: "",
+    mailCommentReason: "",
+    mailCommentDetail: "",
   };
   const [mail, setMail] = useState(mailInitialState);
   const classes = useStyles();
@@ -111,7 +113,6 @@ export default function Update(props) {
                   </CardHeader>
                   <CardBody>
                     <TextField
-                      id="standard-basic"
                       id="mailId"
                       value={mail.mailId}
                       fullWidth
@@ -120,7 +121,6 @@ export default function Update(props) {
                       onChange={onChangeForm}
                     />
                     <TextField
-                      id="standard-basic"
                       label="Building ..."
                       id="mailBuilding"
                       value={mail.mailBuilding}
@@ -128,7 +128,6 @@ export default function Update(props) {
                       onChange={onChangeForm}
                     />
                     <TextField
-                      id="standard-basic"
                       label="room ..."
                       id="mailRoom"
                       value={mail.mailRoom}
@@ -136,7 +135,6 @@ export default function Update(props) {
                       onChange={onChangeForm}
                     />
                     <TextField
-                      id="standard-basic"
                       label="itemType ..."
                       id="mailItemType"
                       value={mail.mailItemType}
@@ -144,7 +142,6 @@ export default function Update(props) {
                       onChange={onChangeForm}
                     />
                     <TextField
-                      id="standard-basic"
                       label="from ..."
                       id="mailFrom"
                       value={mail.mailFrom}

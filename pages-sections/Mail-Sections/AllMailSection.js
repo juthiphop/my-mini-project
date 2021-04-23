@@ -71,6 +71,8 @@ export default function AllMailSection() {
       mailItemType: e.mailItemType,
       mailRoom: e.mailRoom,
       mailStatus: "Recieve",
+      mailCommentReason: e.mailCommentReason,
+      mailCommentDetail: e.mailCommentDetail,
     };
     const res = await api.put(`/mails/`, mail);
     if (res) {
